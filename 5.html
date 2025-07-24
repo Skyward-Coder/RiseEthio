@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RiseEthio - Empower Your Career Journey</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Global Styles */
+    :root {
+      --primary: #4a90e2;
+      --primary-dark: #3578c8;
+      --secondary: #4CAF50;
+      --secondary-dark: #3d8b3d;
+      --accent: #FF9800;
+      --accent-dark: #e68a00;
+      --light: #f4f7fb;
+      --dark: #121212;
+      --text-light: #333;
+      --text-dark: #f2f2f2;
+      --card-bg-light: rgba(255, 255, 255, 0.95);
+      --card-bg-dark: rgba(30, 30, 30, 0.95);
+      --transition: all 0.4s ease;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      --shadow-hover: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #e6f7ff, #f0fff4);
+      color: var(--text-light);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-attachment: fixed;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(74,144,226,0.03)" stroke-width="1"/></svg>');
+      z-index: -1;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: var(--text-dark);
+    }
+
+    body.dark::before {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(100,181,246,0.05)" stroke-width="1"/></svg>');
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .active-page {
+      display: block;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    body.dark header {
+      background: rgba(30, 30, 30, 0.95);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo i {
+      margin-right: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    body.dark .nav-links a {
+      color: var(--text-dark);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: var(--transition);
+      padding: 5px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(74, 144, 226, 0.1);
+    }
+
+    body.dark .theme-toggle {
+      color: var(--text-dark);
+    }
+
+    body.dark .theme-toggle:hover {
+      background: rgba(100, 181, 246, 0.1);
+    }
+
+    /* Card Styles */
+    .card {
+      background: var(--card-bg-light);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 800px;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+
+    body.dark .card {
+      background: var(--card-bg-dark);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to right, var(--primary-dark), #2a60a8);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(to right, var(--secondary), var(--secondary-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(to right, var(--secondary-dark), #2d6b2d);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn-accent {
+      background: linear-gradient(to right, var(--accent), var(--accent-dark));
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+    }
+
+    .btn-accent:hover {
+      background: linear-gradient(to right, var(--accent-dark), #cc7a00);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 25px;
+      justify-content: center;
+    }
+
+    /* Text Styles */
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 25%;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    body.dark h1 {
+      color: #64b5f6;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 30px 0 20px;
+      color: var(--primary);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    body.dark h2 {
+      color: #64b5f6;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin: 25px 0 15px;
+      color: var(--secondary);
+    }
+
+    body.dark h3 {
+      color: #81c784;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Form Elements */
+    label {
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      margin: 10px 0;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    body.dark label {
+      background: #1e1e1e;
+      border: 1px solid #333;
+    }
+
+    label:hover {
+      border-color: var(--primary);
+      background: #f0f8ff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    body.dark label:hover {
+      background: #1a2a3a;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+    }
+
+    .option-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    /* Results Section */
+    #result {
+      margin-top: 30px;
+      padding: 30px;
+      background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
+      border-radius: 15px;
+      text-align: center;
+      display: none;
+      border: 1px solid #c5e3ff;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.6s ease;
+    }
+
+    body.dark #result {
+      background: linear-gradient(135deg, #0d1b2a, #1b263b);
+      border: 1px solid #1e3a5f;
+    }
+
+    .career-title {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .career-description {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    body.dark .career-description {
+      color: var(--text-dark);
+    }
+
+    .career-link {
+      display: inline-block;
+      background: linear-gradient(to right, var(--accent), var(--accent-dark));
+      color: white;
+      padding: 14px 35px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+      margin-top: 15px;
+    }
+
+    .career-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+      background: linear-gradient(to right, var(--accent-dark), #cc7a00);
+    }
+
+    /* Dashboard Styles */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.dark .resource-card {
+      background: #1e1e1e;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .resource-header {
+      background: var(--primary);
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    .resource-body {
+      padding: 25px;
+      flex-grow: 1;
+    }
+
+    .resource-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .resource-body li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+    }
+
+    body.dark .resource-body li {
+      border-bottom: 1px solid #333;
+    }
+
+    .resource-body li:last-child {
+      border-bottom: none;
+    }
+
+    .resource-body a {
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.3s;
+      flex-grow: 1;
+    }
+
+    .resource-body a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    body.dark .resource-body a {
+      color: #64b5f6;
+    }
+
+    body.dark .resource-body a:hover {
+      color: #90caf9;
+    }
+
+    .resource-icon {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: #666;
+      font-size: 1rem;
+      margin-top: 50px;
+    }
+
+    body.dark footer {
+      color: #aaa;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: var(--primary);
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-5px);
+      color: var(--primary-dark);
+    }
+
+    body.dark .social-links a {
+      color: #64b5f6;
+    }
+
+    body.dark .social-links a:hover {
+      color: #90caf9;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      background: #f0f0f0;
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    body.dark .progress-container {
+      background: #2c2c2c;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(74, 144, 226, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid var(--primary);
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Feedback Section */
+    .feedback {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(74, 144, 226, 0.1);
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    body.dark .feedback {
+      background: rgba(100, 181, 246, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo" onclick="showPage('home')">
+        <i class="fas fa-rocket"></i>RiseEthio
+      </a>
+      <div class="nav-links">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('career')">Career Quiz</a>
+        <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+        <a href="#" onclick="showPage('auth')">Login</a>
+        <a href="#" id="feedbackLink">Feedback</a>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Home Page -->
+    <div id="home" class="page active-page">
+      <div class="card">
+        <h1>👋 Welcome to RiseEthio</h1>
+        <p>We're here to help you learn, grow, and rise — one skill at a time. Whether you're a student, a dreamer, or a doer, you're in the right place.</p>
+        
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="showPage('auth')">
+            <i class="fas fa-user"></i> Get Started
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('career')">
+            <i class="fas fa-compass"></i> Career Quiz
+          </button>
+          <button class="btn btn-accent" onclick="showPage('dashboard')">
+            <i class="fas fa-tachometer-alt"></i> Dashboard Preview
+          </button>
+        </div>
+        
+        <div style="margin-top: 40px; text-align: center;">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&h=400" alt="Ethiopian students" style="width: 100%; max-width: 700px; border-radius: 10px; margin: 20px auto;">
+          <p style="font-style: italic; margin-top: 10px;">Empowering Ethiopian youth to reach their full potential</p>
+        </div>
+
+        <div class="feedback">
+          <h3>We Value Your Feedback!</h3>
+          <p>Help us improve by sharing your experience with RiseEthio</p>
+          <button class="btn btn-secondary" onclick="document.getElementById('feedbackLink').click()">
+            <i class="fas fa-comment-alt"></i> Share Feedback
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auth Page -->
+    <div id="auth" class="page">
+      <div class="card">
+        <h1>👋 Welcome to <strong>RiseEthio</strong></h1>
+        <p>Not ready to sign up? No worries—explore as a guest and unlock your potential at your own pace.</p>
+        
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="continueAsGuest()">
+            <i class="fas fa-user-secret"></i> Continue as Guest
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('start')">
+            <i class="fas fa-sign-in-alt"></i> Create Account
+          </button>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+          <p>Already have an account? <a href="#" onclick="showPage('start')" style="color: var(--primary);">Sign in</a></p>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 20%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start Page -->
+    <div id="start" class="page">
+      <div class="card">
+        <h1>✨ What describes you best?</h1>
+        <p>Choose your path to get personalized resources and guidance tailored to your journey.</p>
+        
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="choose('student')">
+            <i class="fas fa-graduation-cap"></i> I'm a Student
+          </button>
+          <button class="btn btn-secondary" onclick="choose('professional')">
+            <i class="fas fa-briefcase"></i> I'm a Professional
+          </button>
+          <button class="btn btn-accent" onclick="choose('learner')">
+            <i class="fas fa-search"></i> Just Exploring
+          </button>
+        </div>
+        
+        <div style="margin-top: 40px;">
+          <h2>Additional Resources</h2>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="showPage('career')">
+              <i class="fas fa-compass"></i> Discover Career Path
+            </button>
+            <button class="btn btn-secondary" onclick="learnLanguage()">
+              <i class="fas fa-language"></i> Learn a Language
+            </button>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 50%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Career Quiz Page -->
+    <div id="career" class="page">
+      <div class="card">
+        <h1><i class="fas fa-compass"></i> Career Path Explorer</h1>
+        <p class="subtitle" style="text-align: center; margin-bottom: 30px;">Discover your ideal career based on your interests, strengths, and personality</p>
+        
+        <div class="progress-container">
+          <div class="progress-bar" style="width: 70%"></div>
+        </div>
+        
+        <form id="careerForm">
+          <!-- Interests Section -->
+          <section>
+            <h2><i class="fas fa-heart"></i> What are you passionate about?</h2>
+            <p>Select activities that genuinely interest you:</p>
+            <div class="option-group">
+              <label>
+                <input type="checkbox" name="interest" value="Realistic">
+                <span>Building or fixing things</span>
+              </label>
+              <label>
+                <input type="checkbox" name="interest" value="Investigative">
+                <span>Solving complex problems</span>
+              </label>
+              <label>
+                <input type="checkbox" name="interest" value="Artistic">
+                <span>Creating art or designs</span>
+              </label>
+              <label>
+                <input type="checkbox" name="interest" value="Social">
+                <span>Helping and teaching others</span>
+              </label>
+              <label>
+                <input type="checkbox" name="interest" value="Enterprising">
+                <span>Leading projects and teams</span>
+              </label>
+            </div>
+          </section>
+          
+          <!-- Strengths Section -->
+          <section>
+            <h2><i class="fas fa-star"></i> What are you good at?</h2>
+            <p>Choose your strongest skills:</p>
+            <div class="option-group">
+              <label>
+                <input type="checkbox" name="strength" value="Logical">
+                <span>Logical thinking & analysis</span>
+              </label>
+              <label>
+                <input type="checkbox" name="strength" value="Creative">
+                <span>Creativity & innovation</span>
+              </label>
+              <label>
+                <input type="checkbox" name="strength" value="Organized">
+                <span>Planning & organization</span>
+              </label>
+              <label>
+                <input type="checkbox" name="strength" value="Communicative">
+                <span>Communication & persuasion</span>
+              </label>
+            </div>
+          </section>
+          
+          <!-- Personality Section -->
+          <section>
+            <h2><i class="fas fa-user"></i> How would you describe yourself?</h2>
+            <p>Select the option that fits you best:</p>
+            <div class="option-group">
+              <label>
+                <input type="radio" name="personality" value="Introvert">
+                <span>Introvert - I prefer working independently</span>
+              </label>
+              <label>
+                <input type="radio" name="personality" value="Extrovert">
+                <span>Extrovert - I thrive in team environments</span>
+              </label>
+            </div>
+          </section>
+          
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary" id="submitBtn">
+              <i class="fas fa-bolt"></i> Find My Career Path
+            </button>
+            <button type="button" class="btn btn-secondary" id="leaderboardBtn">
+              <i class="fas fa-trophy"></i> View Popular Paths
+            </button>
+          </div>
+        </form>
+        
+        <div id="result" class="fade-in">
+          <!-- Results will be displayed here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard" class="page">
+      <div class="card">
+        <h1><i class="fas fa-tachometer-alt"></i> Your Dashboard</h1>
+        <div id="dashboardContent" style="margin-top: 30px;">
+          <!-- Dynamic content based on user role -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Page -->
+    <div id="feedback" class="page">
+      <div class="card">
+        <h1><i class="fas fa-comment-alt"></i> Share Your Feedback</h1>
+        <p>We'd love to hear your thoughts to help us improve RiseEthio!</p>
+        
+        <form id="feedbackForm" style="margin-top: 30px;">
+          <div style="margin-bottom: 20px;">
+            <label for="feedbackName" style="display: block; margin-bottom: 8px; font-weight: 500;">Your Name (Optional)</label>
+            <input type="text" id="feedbackName" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem;">
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <label for="feedbackEmail" style="display: block; margin-bottom: 8px; font-weight: 500;">Email (Optional)</label>
+            <input type="email" id="feedbackEmail" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem;">
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <label for="feedbackMessage" style="display: block; margin-bottom: 8px; font-weight: 500;">Your Feedback*</label>
+            <textarea id="feedbackMessage" rows="5" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; resize: vertical;" required></textarea>
+          </div>
+          
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Submit Feedback
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="showPage('home')">
+              <i class="fas fa-home"></i> Back to Home
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Made with ❤️ in Ethiopia · © 2025 RiseEthio</p>
+    <p style="font-size:0.9rem; margin-top:10px;">Empowering Ethiopian youth to build brighter futures</p>
+    
+    <div class="social-links">
+      <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    // Page Navigation
+    function showPage(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active-page');
+      });
+      
+      // Show selected page
+      document.getElementById(pageId).classList.add('active-page');
+      
+      // Load dashboard if needed
+      if (pageId === 'dashboard') {
+        loadDashboardContent();
+      }
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Initialize feedback link
+    document.getElementById('feedbackLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      showPage('feedback');
+    });
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const themeBtn = document.querySelector('.theme-toggle');
+      themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      document.querySelector('.theme-toggle').textContent = '☀️';
+    }
+
+    // Auth Functions
+    function continueAsGuest() {
+      localStorage.setItem('guest', 'true');
+      showPage('start');
+    }
+
+    // Start Page Functions
+    function choose(role) {
+      localStorage.setItem('userRole', role);
+      showPage('dashboard');
+    }
+
+    function learnLanguage() {
+      window.open("https://www.duolingo.com/", "_blank");
+    }
+
+    // Dashboard Content
+    function loadDashboardContent() {
+      const role = localStorage.getItem('userRole') || 'learner';
+      const content = document.getElementById('dashboardContent');
+      
+      let html = '';
+      
+      if (role === 'student') {
+        html = `
+          <h2>🎓 Student Resources</h2>
+          <p>Welcome, student! Here are resources to help you in your educational journey:</p>
+          
+          <div class="dashboard-grid">
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>📚 Learning Platforms</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://learning.gov.et/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Gov Learning Platform</a></li>
+                  <li><a href="https://www.edx.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>EdX Online Courses</a></li>
+                  <li><a href="https://www.khanacademy.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Khan Academy</a></li>
+                  <li><a href="https://www.coursera.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Coursera</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>🌍 Local Education</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://educationforethiopia.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Local Language Learning</a></li>
+                  <li><a href="https://www.ethioedu.net/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>EthioEdu Resources</a></li>
+                  <li><a href="https://www.aau.edu.et/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Addis Ababa University</a></li>
+                  <li><a href="https://www.moe.gov.et/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Ministry of Education</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>🔬 STEM Resources</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.codecademy.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Codecademy</a></li>
+                  <li><a href="https://www.freecodecamp.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>FreeCodeCamp</a></li>
+                  <li><a href="https://brilliant.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Brilliant STEM Learning</a></li>
+                  <li><a href="https://www.kaggle.com/learn" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Kaggle Data Science</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="feedback" style="margin-top: 40px;">
+            <h3>How was your experience?</h3>
+            <p>We'd love to hear your feedback to improve our platform</p>
+            <button class="btn btn-accent" onclick="showPage('feedback')">
+              <i class="fas fa-comment-alt"></i> Share Feedback
+            </button>
+          </div>
+        `;
+      } else if (role === 'professional') {
+        html = `
+          <h2>💼 Professional Resources</h2>
+          <p>Welcome, professional! Here are resources to advance your career:</p>
+          
+          <div class="dashboard-grid">
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>📈 Career Development</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.linkedin.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>LinkedIn Jobs & Networking</a></li>
+                  <li><a href="https://www.udemy.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Udemy Professional Courses</a></li>
+                  <li><a href="https://www.udacity.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Udacity Career Tracks</a></li>
+                  <li><a href="https://www.coursera.org/professional-certificates" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Coursera Certificates</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>💡 Entrepreneurship</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://ethiopianentrepreneurs.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Ethiopian Entrepreneurs</a></li>
+                  <li><a href="https://www.gebeya.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Gebeya Tech Talent</a></li>
+                  <li><a href="https://www.iceaddis.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>IceAddis Innovation</a></li>
+                  <li><a href="https://ethiopianbusinessreview.net/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Business Resources</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>🌐 Networking</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.meetup.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Professional Meetups</a></li>
+                  <li><a href="https://ethiopianprofessionals.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Ethiopian Professionals</a></li>
+                  <li><a href="https://chamber.et/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Ethiopian Chamber</a></li>
+                  <li><a href="https://www.eventbrite.com/d/ethiopia--addis-abeba/events/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Local Events</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="feedback" style="margin-top: 40px;">
+            <h3>How was your experience?</h3>
+            <p>We'd love to hear your feedback to improve our platform</p>
+            <button class="btn btn-accent" onclick="showPage('feedback')">
+              <i class="fas fa-comment-alt"></i> Share Feedback
+            </button>
+          </div>
+        `;
+      } else {
+        html = `
+          <h2>🔍 Exploration Resources</h2>
+          <p>Welcome, explorer! Here are resources to help you discover your path:</p>
+          
+          <div class="dashboard-grid">
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>🧭 Career Exploration</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.mynextmove.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Career Interest Profiler</a></li>
+                  <li><a href="https://www.onetonline.org/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Occupation Research</a></li>
+                  <li><a href="https://www.ted.com/topics/career" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Career TED Talks</a></li>
+                  <li><a href="https://www.careerexplorer.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Career Explorer</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>🎓 Skill Development</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.futurelearn.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>FutureLearn Courses</a></li>
+                  <li><a href="https://www.skillshare.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Skillshare Creative Skills</a></li>
+                  <li><a href="https://www.codecademy.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Codecademy</a></li>
+                  <li><a href="https://www.duolingo.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Duolingo Language</a></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="resource-card">
+              <div class="resource-header">
+                <h3>💼 Freelancing</h3>
+              </div>
+              <div class="resource-body">
+                <ul>
+                  <li><a href="https://www.upwork.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Upwork Freelancing</a></li>
+                  <li><a href="https://www.fiverr.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Fiverr Gigs</a></li>
+                  <li><a href="https://freelanceethiopia.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Freelance Ethiopia</a></li>
+                  <li><a href="https://www.freelancer.com/" target="_blank"><i class="fas fa-external-link-alt resource-icon"></i>Freelancer.com</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="feedback" style="margin-top: 40px;">
+            <h3>How was your experience?</h3>
+            <p>We'd love to hear your feedback to improve our platform</p>
+            <button class="btn btn-accent" onclick="showPage('feedback')">
+              <i class="fas fa-comment-alt"></i> Share Feedback
+            </button>
+          </div>
+        `;
+      }
+      
+      content.innerHTML = html;
+    }
+
+    // Career Quiz Logic
+    document.addEventListener('DOMContentLoaded', function() {
+      const submitBtn = document.getElementById('submitBtn');
+      const leaderboardBtn = document.getElementById('leaderboardBtn');
+      const resultDiv = document.getElementById('result');
+      const feedbackForm = document.getElementById('feedbackForm');
+      
+      // Career descriptions
+      const careerInfo = {
+        Developer: {
+          title: "Software Developer",
+          description: "You have a natural talent for logical thinking and problem-solving. As a developer, you'll create innovative software solutions, build applications, and solve complex technical challenges. Your methodical approach makes you well-suited for careers in tech.",
+          link: "https://www.udacity.com/school-of-programming"
+        },
+        Designer: {
+          title: "Creative Designer",
+          description: "Your artistic vision and creative thinking set you apart. Design careers allow you to express ideas visually and create compelling user experiences. You'll thrive in roles that value innovation, aesthetics, and visual communication.",
+          link: "https://www.coursera.org/browse/arts-and-humanities"
+        },
+        Entrepreneur: {
+          title: "Business Entrepreneur",
+          description: "With your leadership skills and enterprising spirit, you're destined to build something great. Entrepreneurship offers the freedom to innovate, create businesses, and bring your visionary ideas to life in the marketplace.",
+          link: "https://www.udemy.com/topic/entrepreneurship/"
+        },
+        Researcher: {
+          title: "Research Specialist",
+          description: "Your analytical mind and investigative nature make research an ideal path. You'll uncover new knowledge, analyze data, and solve complex problems across scientific, academic, or industrial settings.",
+          link: "https://www.edx.org/learn/data-science"
+        },
+        Helper: {
+          title: "Helping Professional",
+          description: "Your empathy and desire to help others shine through. Careers in teaching, counseling, healthcare, or social services will allow you to make a meaningful difference in people's lives every day.",
+          link: "https://alison.com/courses/teaching-skills"
+        }
+      };
+      
+      // Submit button handler
+      submitBtn.addEventListener('click', function() {
+        // Reset any previous results
+        resultDiv.style.display = 'none';
+        resultDiv.innerHTML = '<div class="spinner"></div>';
+        resultDiv.style.display = 'block';
+        
+        // Simulate processing time
+        setTimeout(() => {
+          // Check if personality is selected
+          const personalitySelected = document.querySelector('input[name="personality"]:checked');
+          if (!personalitySelected) {
+            resultDiv.innerHTML = `
+              <div style="color:#e74c3c; text-align:center; padding:20px;">
+                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                <h3>Complete Your Profile</h3>
+                <p>Please answer all sections to get accurate career suggestions.</p>
+              </div>
+            `;
+            return;
+          }
+          
+          // Initialize scores
+          const scores = {
+            Designer: 0,
+            Developer: 0,
+            Entrepreneur: 0,
+            Researcher: 0,
+            Helper: 0,
+          };
+          
+          // Calculate interest scores
+          document.querySelectorAll('input[name="interest"]:checked').forEach(input => {
+            switch(input.value) {
+              case "Realistic": scores.Developer += 2; break;
+              case "Investigative": scores.Researcher += 3; break;
+              case "Artistic": scores.Designer += 3; break;
+              case "Social": scores.Helper += 3; break;
+              case "Enterprising": scores.Entrepreneur += 3; break;
+            }
+          });
+          
+          // Calculate strength scores
+          document.querySelectorAll('input[name="strength"]:checked').forEach(input => {
+            switch(input.value) {
+              case "Logical":
+                scores.Developer += 3;
+                scores.Researcher += 2;
+                break;
+              case "Creative":
+                scores.Designer += 3;
+                scores.Entrepreneur += 1;
+                break;
+              case "Organized":
+                scores.Entrepreneur += 2;
+                scores.Helper += 1;
+                break;
+              case "Communicative":
+                scores.Helper += 2;
+                scores.Entrepreneur += 2;
+                break;
+            }
+          });
+          
+          // Personality adjustment
+          const personality = document.querySelector('input[name="personality"]:checked').value;
+          if (personality === "Introvert") {
+            scores.Researcher += 2;
+            scores.Developer += 1;
+          } else {
+            scores.Entrepreneur += 2;
+            scores.Helper += 2;
+          }
+          
+          // Find best career match
+          let bestCareer = '';
+          let highestScore = 0;
+          
+          for (const career in scores) {
+            if (scores[career] > highestScore) {
+              highestScore = scores[career];
+              bestCareer = career;
+            }
+          }
+          
+          // Display result
+          const career = careerInfo[bestCareer];
+          resultDiv.innerHTML = `
+            <div class="career-result">
+              <h2 class="career-title">${career.title}</h2>
+              <p class="career-description">${career.description}</p>
+              <a href="${career.link}" target="_blank" class="career-link">
+                Explore Career Path <i class="fas fa-arrow-right"></i>
+              </a>
+              <div style="margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="showPage('dashboard')">
+                  <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                </button>
+              </div>
+            </div>
+          `;
+        }, 1500); // Simulate processing time
+      });
+      
+      // Leaderboard button handler (simulated data)
+      leaderboardBtn.addEventListener('click', function() {
+        // Sample leaderboard data
+        const leaderboardData = [
+          { career: "Developer", count: 142 },
+          { career: "Designer", count: 98 },
+          { career: "Entrepreneur", count: 87 },
+          { career: "Researcher", count: 76 },
+          { career: "Helper", count: 65 }
+        ];
+        
+        // Create leaderboard HTML
+        let leaderboardHTML = `
+          <div class="leaderboard fade-in" style="background: #fff8e1; border-radius: 12px; padding: 20px; margin-top: 20px;">
+            <h3><i class="fas fa-chart-bar"></i> Most Popular Career Paths</h3>
+        `;
+        
+        leaderboardData.forEach(item => {
+          leaderboardHTML += `
+            <div class="leaderboard-item" style="display: flex; justify-content: space-between; padding: 12px 15px; background: white; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #FF9800; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+              <span class="leaderboard-career" style="font-weight: 600; color: #2c3e50;">${careerInfo[item.career].title}</span>
+              <span class="leaderboard-count" style="background: #4CAF50; color: white; padding: 2px 12px; border-radius: 20px; font-weight: 600;">${item.count}</span>
+            </div>
+          `;
+        });
+        
+        leaderboardHTML += '</div>';
+        
+        // Display leaderboard
+        resultDiv.innerHTML = leaderboardHTML;
+        resultDiv.style.display = 'block';
+      });
+      
+      // Feedback form submission
+      feedbackForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('feedbackName').value;
+        const email = document.getElementById('feedbackEmail').value;
+        const message = document.getElementById('feedbackMessage').value;
+        
+        // Show thank you message
+        feedbackForm.innerHTML = `
+          <div style="text-align: center; padding: 30px;">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: #4CAF50; margin-bottom: 20px;"></i>
+            <h3>Thank You for Your Feedback!</h3>
+            <p>We appreciate your input and will use it to improve RiseEthio.</p>
+            <button class="btn btn-primary" onclick="showPage('home')" style="margin-top: 20px;">
+              <i class="fas fa-home"></i> Return to Home
+            </button>
+          </div>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>
